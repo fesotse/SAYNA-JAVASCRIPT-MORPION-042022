@@ -25,26 +25,6 @@ function choix(element){
     console.log(tableau)
 }
 function choiseCase(id) {
-    // const position=event.target.id;
-    // if (case_libre[position]==null){
-    //      case_libre[position] = this.currentPlayer;
-    //     console.log(case_libre[position])
-    //     // you = this.currentPlayer;
-    //     console.log(currentPlayer)
-    //     //ecriture sur html
-    //     event.target.innerText = this.currentPlayer;
-    //     coup += 1;  
-    //     // Mise en place des tours des joueurs dont you est le premier
-    //     if (currentPlayer===you){
-    //         currentPlayer = cpu;
-    //     }
-    //     else if (currentPlayer === cpu){
-    //         currentPlayer = you;
-    //     }
-    // }
-    // else if (case_libre[position!=null]){
-    //     continu;
-    // }    
     let identifiant= document.getElementById(id);
     if (identifiant.innerHTML!= ""){
         return;
@@ -53,21 +33,35 @@ function choiseCase(id) {
     if (statu_jeu.joueur==="you"){
         identifiant.innerHTML= tableau[0];
         statu_jeu.joueur= "cpu";
+        coup+=1;
         console.log(statu_jeu.joueur)
+        console.log(coup)
     }
     else if (statu_jeu.joueur ==="cpu"){
         identifiant.innerHTML= tableau[1];
         statu_jeu.joueur= "you";
+        coup+=1;
         console.log(statu_jeu.joueur)
     }
     if (youWon()== true){
         you_score+=1;
         document.querySelector('.you-score').innerText= you_score;
         document.querySelector('.layer2').style.display='block';
-        // document.querySelector('.layer2').innerText='you win';
+        document.querySelector('.layer2>p').innerText='Congratulation!!! \n you won';
+    }
+    else if (cpuWon()== true){
+        cpu_score+=1;
+        document.querySelector('.cpu-score').innerText= cpu_score;
+        document.querySelector('.layer2').style.display='block';
+        document.querySelector('.layer2>p').innerText="you loose but \n don't give up!!";
+    }
+    else if (coup == 9){
+        if (youWon()!= true && cpuWon()!= true){
+            document.querySelector('.layer2').style.display='block';
+            document.querySelector('.layer2>p').innerText='Tie game \n hang on!!';
+        }
     }
 }    
-
 
 function youWon(){
     let you = tableau[0];
@@ -113,6 +107,9 @@ function youWon(){
             return true;
         }
     }
+    else {
+        return false
+    }
 }
 function cpuWon(){
     let A = document.getElementById('item1').innerText;
@@ -156,14 +153,11 @@ function cpuWon(){
             return true;
         }
     }
+    else{
+        return false
+    }
 }
 
-function drawn(){
-    if ( coup=== 9 && cpuWon === false && youWon === false ){
-                
-    } 
-}
-    // Vide le contenu de toute les cases
 function reset() {
     item1.textContent="";
     item2.textContent="";
@@ -180,6 +174,7 @@ function reset() {
     cpu_score = 0;
     you_score = 0;
     tableau=[]
+    statu_jeu.joueur="you"
     document.querySelector('.layer').style.display='block';
     // item1.className="grid-item",
 }
