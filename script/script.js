@@ -1,147 +1,170 @@
 // initialization des variables
 let coup=0;
-// what is this????
-let case_libre=[null,null,null,null,null,null,null,null,null]
-
-let you="x";
-let cpu="O";
+let cpu;
 let you_score=0;
 let cpu_score=0;
-var currentPlayer= you;
-    // Récupération des cases à clicker
-    // const items = Array.from(document.getElementsByClassName('grid-item'));
-    // console.log(items)
-
-function choiseCase(id) {
-    const position=event.target.id;
-    if (case_libre[position]==null){
-        //cette étape permet d'éviter le chevauchement des pions
-        case_libre[position] = currentPlayer;
-        // document.getElementById('item${position}').innerHTML = currentPlayer;
-        console.log(case_libre[position])
-        console.log(event.target.id)
-        //ecriture sur html
-        event.target.innerText = currentPlayer;
-        console.log(event.target.innerText)
-        
-        //change of classname of grid-itemchossen
-        if (coup%2==0){
-            event.target.className="choose1";
-        }
-        else if (coup%2==1){
-            event.target.className='choose2';
-        }
-        
-        if (youWon === true){
-            document.getElementById('end-game').style.display='block'
-            document.getElementById('end-game').innerHTML="You have win";
-            //NEED TO CHECK THIS SECTION ABOUT SCORE
-            you_score+=1;
-            // document.getElementsByClassName('${currentPlayer}-score').innerText='${score}'
-        }
-        if (cpuWon === true){
-            document.getElementById('layer2').style.display="block";
-            console.log('cpu has won')
-            cpu_score+=1;
-        }
-        // Mise en place des tours des joueurs dont you est le premier
-        if (currentPlayer==you){
-            currentPlayer = cpu;
-        }
-        else if (currentPlayer == cpu){
-            currentPlayer = you;
-        }
-    }
-    else if (case_libre[position!=null]){
-        continu
-    }
+var currentPlayer;
+let statu_jeu={
+    joueur:"you",
 }
+let tableau = []
+function choix(element){
+    let currentPlayer = element;
+    let you = currentPlayer;
+    console.log("your choise "+you)
+    if (currentPlayer === "X"){
+        cpu = "O";
+    }
+    else if (currentPlayer === 'O'){
+        cpu = "X";
+    }
+    console.log("cpu is "+cpu)
+    document.querySelector('.layer').style.display='none';
+    tableau.push(currentPlayer)
+    tableau.push(cpu)
+    console.log(tableau)
+}
+function choiseCase(id) {
+    // const position=event.target.id;
+    // if (case_libre[position]==null){
+    //      case_libre[position] = this.currentPlayer;
+    //     console.log(case_libre[position])
+    //     // you = this.currentPlayer;
+    //     console.log(currentPlayer)
+    //     //ecriture sur html
+    //     event.target.innerText = this.currentPlayer;
+    //     coup += 1;  
+    //     // Mise en place des tours des joueurs dont you est le premier
+    //     if (currentPlayer===you){
+    //         currentPlayer = cpu;
+    //     }
+    //     else if (currentPlayer === cpu){
+    //         currentPlayer = you;
+    //     }
+    // }
+    // else if (case_libre[position!=null]){
+    //     continu;
+    // }    
+    let identifiant= document.getElementById(id);
+    if (identifiant.innerHTML!= ""){
+        return;
+    }
+    //cette étape permet d'éviter le chevauchement des pions
+    if (statu_jeu.joueur==="you"){
+        identifiant.innerHTML= tableau[0];
+        statu_jeu.joueur= "cpu";
+        console.log(statu_jeu.joueur)
+    }
+    else if (statu_jeu.joueur ==="cpu"){
+        identifiant.innerHTML= tableau[1];
+        statu_jeu.joueur= "you";
+        console.log(statu_jeu.joueur)
+    }
+    if (youWon()== true){
+        you_score+=1;
+        document.querySelector('.you-score').innerText= you_score;
+        document.querySelector('.layer2').style.display='block';
+        // document.querySelector('.layer2').innerText='you win';
+    }
+}    
+
+
 function youWon(){
-    if (item1 === you){
-        if (item2=== you && item3=== you){
+    let you = tableau[0];
+    console.log(tableau[0])
+    let A = document.getElementById('item1').innerText;
+    let B = document.getElementById('item2').innerText;
+    let C = document.getElementById('item3').innerText;
+    let D = document.getElementById('item4').innerText;
+    let E = document.getElementById('item5').innerText;
+    let F = document.getElementById('item6').innerText;
+    let G = document.getElementById('item7').innerText;
+    let H = document.getElementById('item8').innerText;
+    let I = document.getElementById('item9').innerText;
+    if (A == you){
+        if (B == you && C == you){
             return true;
         }
-        if (item5=== you && item9=== you){
+        if (E=== you && I=== you){
             return true;
         }
-        if (item4=== you && item7=== you){
-            return true;
-        }
-    }
-    if (item3 === you){
-        if (item5=== you && item7=== you){
-            return true;
-        }
-        if (item6=== you && item9=== you){
-            return true;
-        }
-    }
-    if (item5 === you){
-        if (item6=== you && item4=== you){
-            return true;
-        }
-        if (item2=== you && item8=== you){
+        if (D=== you && G=== you){
             return true;
         }
     }
-    if (item8 == you){
-        if (item7=== you && item9=== you){
+    if (C === you){
+        if (E=== you && G=== you){
+            return true;
+        }
+        if (F=== you && I=== you){
+            return true;
+        }
+    }
+    if (E === you){
+        if (F=== you && D=== you){
+            return true;
+        }
+        if (B=== you && H=== you){
+            return true;
+        }
+    }
+    if (H == you){
+        if (G=== you && I=== you){
             return true;
         }
     }
 }
 function cpuWon(){
-    if (case_libre[0] === cpu){
-        if (case_libre[1]=== cpu && case_libre[2]=== cpu){
+    let A = document.getElementById('item1').innerText;
+    let B = document.getElementById('item2').innerText;
+    let C = document.getElementById('item3').innerText;
+    let D = document.getElementById('item4').innerText;
+    let E = document.getElementById('item5').innerText;
+    let F = document.getElementById('item6').innerText;
+    let G = document.getElementById('item7').innerText;
+    let H = document.getElementById('item8').innerText;
+    let I = document.getElementById('item9').innerText;
+    if (A === cpu){
+        if (B=== cpu && C=== cpu){
             return true;
         }
-        if (case_libre[4]=== cpu && case_libre[8]=== cpu){
+        if (D=== cpu && I=== cpu){
             return true;
         }
-        if (case_libre[3]=== cpu && case_libre[6]=== cpu){
-            return true;
-        }
-    }
-    if (case_libre[2] === cpu){
-        if (case_libre[4]=== cpu && case_libre[6]=== cpu){
-            return true;
-        }
-        if (case_libre[5]=== cpu && case_libre[8]=== cpu){
-            return true;
-        }
-    }
-    if (case_libre[4] === cpu){
-        if (case_libre[5]=== cpu && case_libre[3]=== cpu){
-            return true;
-        }
-        if (case_libre[1]=== cpu && case_libre[7]=== cpu){
+        if (D=== cpu && G=== cpu){
             return true;
         }
     }
-    if (case_libre[7] == cpu){
-        if (case_libre[6]=== cpu && case_libre[8]=== cpu){
+    if (C === cpu){
+        if (E=== cpu && G=== cpu){
+            return true;
+        }
+        if (F=== cpu && I=== cpu){
+            return true;
+        }
+    }
+    if (E === cpu){
+        if (F=== cpu && D=== cpu){
+            return true;
+        }
+        if (B=== cpu && H=== cpu){
+            return true;
+        }
+    }
+    if (H == cpu){
+        if (G=== cpu && I=== cpu){
             return true;
         }
     }
 }
 
 function drawn(){
-    if ( coup=== 9 ){
-        
+    if ( coup=== 9 && cpuWon === false && youWon === false ){
+                
     } 
 }
     // Vide le contenu de toute les cases
 function reset() {
-    document.getElementById('item1').className= "grid-item";
-    document.getElementById('item2').className= "grid-item";
-    document.getElementById('item3').className= "grid-item";
-    document.getElementById('item4').className= "grid-item";
-    document.getElementById('item5').className= "grid-item";
-    document.getElementById('item6').className= "grid-item";
-    document.getElementById('item7').className= "grid-item";
-    document.getElementById('item8').className= "grid-item";
-    document.getElementById('item9').className= "grid-item";
-    case_libre=[null,null,null,null,null,null,null,null,null]
     item1.textContent="";
     item2.textContent="";
     item3.textContent="";
@@ -151,6 +174,28 @@ function reset() {
     item7.textContent="";
     item8.textContent="";
     item9.textContent="";
+    coup = 0;
+    document.querySelector('.you-score').innerText= 0;
+    document.querySelector('.cpu-score').innerText= 0;
+    cpu_score = 0;
+    you_score = 0;
+    tableau=[]
+    document.querySelector('.layer').style.display='block';
     // item1.className="grid-item",
 }
-
+function playagain(){
+    item1.textContent="";
+    item2.textContent="";
+    item3.textContent="";
+    item4.textContent="";
+    item5.textContent="";
+    item6.textContent="";
+    item7.textContent="";
+    item8.textContent="";
+    item9.textContent="";
+    coup = 0;
+    document.querySelector('.layer2').style.display='none';
+    document.querySelector('.layer').style.display='block';
+    statu_jeu.joueur="you"
+    choix()
+}
