@@ -26,6 +26,7 @@ function choix(element){
 }
 function choiseCase(id) {
     let identifiant= document.getElementById(id);
+
     if (identifiant.innerHTML!= ""){
         return;
     }
@@ -35,12 +36,26 @@ function choiseCase(id) {
         statu_jeu.joueur= "cpu";
         coup+=1;
         console.log(coup)
-
-        //cpuchoice
+        if (coup<8){
+            //cpuchoice
         let contenu = cpuchoice();
         contenu.innerHTML = tableau[1];
         statu_jeu.joueur= "you";
         coup+=1;
+        console.log(coup)
+        }
+        else if(coup== 9){
+            if(youWon()== true){
+                you_score+=1;
+                document.querySelector('.you-score').innerText= you_score;
+                document.querySelector('.layer2').style.display='block';
+                document.querySelector('.layer2>p').innerText='Congratulation!!! \n you won';
+            }
+            else if (youWon()!= true && cpuWon()!= true){
+                document.querySelector('.layer2').style.display='block';
+                document.querySelector('.layer2>p').innerText='Tie game \n hang on!!';
+            }    
+        }
     }
 
     if (youWon()== true){
@@ -54,12 +69,6 @@ function choiseCase(id) {
         document.querySelector('.cpu-score').innerText= cpu_score;
         document.querySelector('.layer2').style.display='block';
         document.querySelector('.layer2>p').innerText="you loose but \n don't give up!!";
-    }
-    else if (coup == 9){
-        if (youWon()!= true && cpuWon()!= true){
-            document.querySelector('.layer2').style.display='block';
-            document.querySelector('.layer2>p').innerText='Tie game \n hang on!!';
-        }
     }
 }    
 
@@ -169,12 +178,17 @@ function cpuchoice(){
     let I = document.getElementById('item9');
     let list=[A,B,C,D,E,F,G,H,I]
     //get random number to choose random position
-    let position = list[Math.floor(Math.random() * (list.length-1))];
-    console.log(position)
-    while (position.innerHTML != ""){
-        position = list[Math.floor(Math.random() * (list.length-1))];
+    if( coup<9){
+        let position = list[Math.floor(Math.random() * (list.length-1))];
+        console.log(position)
+        while (position.innerHTML != ""){
+            position = list[Math.floor(Math.random() * (list.length-1))];
+        }
+        return position
     }
-    return position
+    else{                                                                                                                                                                                                           
+    }
+        
 
 }
 function reset() {
