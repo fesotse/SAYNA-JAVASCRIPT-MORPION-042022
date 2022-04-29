@@ -34,15 +34,15 @@ function choiseCase(id) {
         identifiant.innerHTML= tableau[0];
         statu_jeu.joueur= "cpu";
         coup+=1;
-        console.log(statu_jeu.joueur)
         console.log(coup)
-    }
-    else if (statu_jeu.joueur ==="cpu"){
-        identifiant.innerHTML= tableau[1];
+
+        //cpuchoice
+        let contenu = cpuchoice();
+        contenu.innerHTML = tableau[1];
         statu_jeu.joueur= "you";
         coup+=1;
-        console.log(statu_jeu.joueur)
     }
+
     if (youWon()== true){
         you_score+=1;
         document.querySelector('.you-score').innerText= you_score;
@@ -157,7 +157,26 @@ function cpuWon(){
         return false
     }
 }
+function cpuchoice(){
+    let A = document.getElementById('item1');
+    let B = document.getElementById('item2');
+    let C = document.getElementById('item3');
+    let D = document.getElementById('item4');
+    let E = document.getElementById('item5');
+    let F = document.getElementById('item6');
+    let G = document.getElementById('item7');
+    let H = document.getElementById('item8');
+    let I = document.getElementById('item9');
+    let list=[A,B,C,D,E,F,G,H,I]
+    //get random number to choose random position
+    let position = list[Math.floor(Math.random() * (list.length-1))];
+    console.log(position)
+    while (position.innerHTML != ""){
+        position = list[Math.floor(Math.random() * (list.length-1))];
+    }
+    return position
 
+}
 function reset() {
     item1.textContent="";
     item2.textContent="";
